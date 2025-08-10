@@ -2,17 +2,29 @@
 
 import asyncio
 import websockets.asyncio.server as wsserver
+from websockets.exceptions import ConnectionClosed
 
-
+CONNECTIONS = set()
 
 async def handler(websocket):
-    async for message in websocket:
-        await wsserver.broadcast(global_server.connections, message)
+    CONNECTIONS.add(websocket)
+    try:
+        async for message in websocket:
+            await broadcast_all(message, websocket)
+            pass
+    finally:
+        CONNECTIONS.remove(websocket)
+
+async def broadcast_all(message, websocket):
+    for websocket in CONNECTIONS.copy():
+        try:
+            await websocket.send(message)
+            print(f"broadcasted {message}")
+        except ConnectionClosed:
+            pass
 
 async def main():
-    global global_server
-    async with wsserver.serve(handler, "localhost", 8765) as global_server:
-        # server = global_server
-        await global_server.serve_forever()
+    async with wsserver.serve(handler, "localhost", 8765) as server:
+        await server.serve_forever()
 
 asyncio.run(main())

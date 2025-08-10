@@ -40,6 +40,10 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 		<div id="app">
 			<SchemeStyles scheme={scheme} motion="expressive">
 				<div class="bg" />
+				<div class="messages" on:click={click}>
+					{use(this.messages)}
+					<MessageCreate text={use(this.text)} on:post={post} open={use(this.open)} />
+				</div>
 				<div class="info">
 					<Card variant="elevated">
 						<div class="m3dl-font-display-small"><b>Spatial messenger thingy</b></div>
@@ -49,10 +53,6 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 						</div>
 						<TextFieldFilled value={use(this.name)} placeholder="name" />
 					</Card>
-				</div>
-				<div class="messages" on:click={click}>
-					{use(this.messages)}
-					<MessageCreate text={use(this.text)} on:post={post} open={use(this.open)} />
 				</div>
 			</SchemeStyles>
 		</div>
@@ -81,10 +81,14 @@ App.style = css<typeof App>`
 	}
 
 	.info {
+		pointer-events: none;
 		padding: 1em;
 		display: flex;
 		align-items: flex-start;
 		justify-content: end;
+	}
+	.info > :global(*) {
+		pointer-events: auto;
 	}
 
 	.messages > :global(.create) {

@@ -5,9 +5,13 @@ import websockets.asyncio.server as wsserver
 from websockets.exceptions import ConnectionClosed
 
 CONNECTIONS = set()
+MESSAGES = []
 
 async def handler(websocket):
     CONNECTIONS.add(websocket)
+    if MESSAGES:
+        broadcast_messages(MESSAGES, websocket)
+    
     try:
         async for message in websocket:
             broadcast_all(message, websocket)
@@ -26,6 +30,13 @@ def broadcast_all(message, websocket):
         if connection != websocket:
             print(f"broadcasting \"{message}\"")
             asyncio.create_task(send(connection, message))
+    MESSAGES.append(message)
+    while MESSAGES.__len__ > 100:
+        MESSAGES.pop(0)
+
+def broadcast_messages(messages, websocket):
+    for message in messages:
+        asyncio.create_task(send(websocket, message))
 
 async def main():
     async with wsserver.serve(handler, "localhost", 8765) as server:

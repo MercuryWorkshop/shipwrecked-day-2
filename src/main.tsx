@@ -44,8 +44,8 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 					</Card>
 				</div>
 				<div class="messages" on:click={click}>
-					<MessageCreate text={use(this.text)} on:post={post} />
 					{use(this.messages)}
+					<MessageCreate text={use(this.text)} on:post={post} />
 				</div>
 			</SchemeStyles>
 		</div>

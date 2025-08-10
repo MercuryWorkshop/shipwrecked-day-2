@@ -327,13 +327,8 @@ packages:
   htm@3.1.1:
     resolution: {integrity: sha512-983Vyg8NwUE7JkZ6NmOqpCZ+sh1bKv2iYTlUkzlWmA5JD2acKoxd4KVxbMmxX/85mtfdnDmTFoNKcg5DGAvxNQ==}
 
-<<<<<<< HEAD
   m3-dreamland@https://codeload.github.com/r58Playz/m3-dreamland/tar.gz/8dc3099aafb56d77c8b30a9a5779823483075eb3:
     resolution: {tarball: https://codeload.github.com/r58Playz/m3-dreamland/tar.gz/8dc3099aafb56d77c8b30a9a5779823483075eb3}
-=======
-  m3-dreamland@https://codeload.github.com/r58Playz/m3-dreamland/tar.gz/c30d59640d891c4faf50b88ac7fa1893fc5ab540:
-    resolution: {tarball: https://codeload.github.com/r58Playz/m3-dreamland/tar.gz/c30d59640d891c4faf50b88ac7fa1893fc5ab540}
->>>>>>> 3078f28 (update lockfile)
     version: 0.1.0
 
   nanoid@3.3.11:
@@ -613,11 +608,7 @@ snapshots:
 
   htm@3.1.1: {}
 
-<<<<<<< HEAD
   m3-dreamland@https://codeload.github.com/r58Playz/m3-dreamland/tar.gz/8dc3099aafb56d77c8b30a9a5779823483075eb3:
-=======
-  m3-dreamland@https://codeload.github.com/r58Playz/m3-dreamland/tar.gz/c30d59640d891c4faf50b88ac7fa1893fc5ab540:
->>>>>>> 3078f28 (update lockfile)
     dependencies:
       '@ktibow/iconset-material-symbols': 0.0.1752989765
       '@ktibow/material-color-utilities-nightly': 0.3.11754790331695

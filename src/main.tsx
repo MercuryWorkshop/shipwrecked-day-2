@@ -1,8 +1,8 @@
 import { css, type Component} from 'dreamland/core'
 import './style.css'
 import { argbFromHex, Card, DynamicScheme, Hct, SchemeStyles, TextFieldFilled, Variant } from 'm3-dreamland';
-import "m3-dreamland/styles";
 import { Message, MessageCreate } from './Message';
+import { send_message, add_message_listener} from './send';
 
 let scheme = new DynamicScheme({
 	sourceColorHct: Hct.fromInt(argbFromHex("CBA6F7")),
@@ -28,13 +28,25 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 		}
 	}
 
-	let post = () => {
-		this.messages = [...this.messages, <Message name={this.name} text={this.text} x={this.clickX} y={this.clickY} />];
-		this.text = "";
-		this.clickX = -48;
-		this.clickY = -48;
-		this.open = false;
-	}
+  let add_message = (name : string, text : string, x : number, y : number) => {
+    this.messages = [
+      ... this.messages, <Message name = {name} text = {text} x = {x} y = {y} />
+    ];
+    this.text = "";
+    this.clickX = -48;
+    this.clickY = -48;
+    this.open = false;
+  }
+
+  add_message_listener((msg: string) => {
+    const msg_parsed = JSON.parse(msg);
+    add_message(msg_parsed.username, msg_parsed.message, msg_parsed.x, msg_parsed.y);
+  })
+
+  let post = () => {
+    send_message(this.name, this.text, this.clickX, this.clickY);
+    add_message(this.name, this.text, this.clickX, this.clickY)
+  }
 
 	return (
 		<div id="app">

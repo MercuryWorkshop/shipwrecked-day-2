@@ -1,7 +1,6 @@
 import { css, type Component } from "dreamland/core";
 import {
 	Button,
-	Card,
 	Icon,
 	ToggleButton,
 } from "m3-dreamland";

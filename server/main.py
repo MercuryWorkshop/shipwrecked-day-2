@@ -10,18 +10,22 @@ async def handler(websocket):
     CONNECTIONS.add(websocket)
     try:
         async for message in websocket:
-            await broadcast_all(message, websocket)
+            broadcast_all(message, websocket)
             pass
     finally:
         CONNECTIONS.remove(websocket)
 
-async def broadcast_all(message, websocket):
-    for websocket in CONNECTIONS.copy():
-        try:
-            await websocket.send(message)
-            print(f"broadcasted {message}")
-        except ConnectionClosed:
-            pass
+async def send(websocket, message):
+    try:
+        await websocket.send(message)
+    except ConnectionClosed:
+        pass
+
+def broadcast_all(message, websocket):
+    for connection in CONNECTIONS:
+        if connection != websocket:
+            print(f"broadcasting \"{message}\"")
+            asyncio.create_task(send(connection, message))
 
 async def main():
     async with wsserver.serve(handler, "localhost", 8765) as server:

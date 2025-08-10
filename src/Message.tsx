@@ -1,33 +1,32 @@
 import { css, type Component } from "dreamland/core";
 import {
-  Button,
-  Card,
-  Icon,
-  TextFieldFilled,
-  ToggleButton,
+	Button,
+	Card,
+	Icon,
+	ToggleButton,
 } from "m3-dreamland";
 import iconAdd from "@ktibow/iconset-material-symbols/add";
 import iconSend from "@ktibow/iconset-material-symbols/send-outline";
 
 export const Message: Component<
-  { name: string; text: string; x: number; y: number },
-  { open: boolean }
-> = function () {
-  this.open = false;
-  return (
-    <div>
-      <div class="root">
-        <ToggleButton variant="elevated" value={use(this.open)}>
-          {this.name}
-        </ToggleButton>
-        <div class="card" class:shown={use(this.open)}>
-          <Card variant="elevated">
-            <i>Message:</i> {this.text}
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
+	{ name: string; text: string; x: number; y: number },
+	{ open: boolean }
+> = function() {
+	this.open = false;
+	return (
+		<div>
+			<div class="root">
+				<ToggleButton variant="elevated" value={use(this.open)}>
+					{this.name}
+				</ToggleButton>
+				<div class="card" class:shown={use(this.open)}>
+					<Card variant="elevated">
+						<i>Message:</i> {this.text}
+					</Card>
+				</div>
+			</div>
+		</div>
+	);
 };
 Message.style = css<typeof Message>`
   :scope {
@@ -51,29 +50,29 @@ Message.style = css<typeof Message>`
 `;
 
 export const MessageCreate: Component<
-  { text: string; "on:post": () => void },
-  { open: boolean }
-> = function () {
-  this.open = false;
-  return (
-    <div class="create">
-      <ToggleButton variant="elevated" value={use(this.open)} icon="full">
-        <Icon icon={iconAdd} />
-      </ToggleButton>
-      <div class="card" class:shown={use(this.open)}>
-        <div>
-          <input type="text" placeholder="Message" value={use(this.text)} />
-        </div>
-        <div class="btn">
-        <Button variant="filled" on:click={this["on:post"]}>
-          <Icon icon={iconSend} />
-        </Button>
-        </div>
-      </div>
-    </div>
-  );
+	{ text: string; "on:post": () => void },
+	{ open: boolean }
+> = function() {
+	this.open = false;
+	return (
+		<div class="create">
+			<ToggleButton variant="elevated" value={use(this.open)} icon="full">
+				<Icon icon={iconAdd} />
+			</ToggleButton>
+			<div class="card" class:shown={use(this.open)}>
+				<div>
+					<input type="text" placeholder="Message" value={use(this.text)} />
+				</div>
+				<div class="btn">
+					<Button variant="filled" on:click={this["on:post"]}>
+						<Icon icon={iconSend} />
+					</Button>
+				</div>
+			</div>
+		</div>
+	);
 };
-  MessageCreate.style = css`
+MessageCreate.style = css`
   :scope {
     position: relative;
   }
@@ -88,13 +87,13 @@ export const MessageCreate: Component<
     padding-left: 1rem;
     border: none;
     border-radius: 8px 3rem 3rem 3rem;
-    display: flex;
+    display: none;
     gap: 0.5rem;
     flex-direction: row;
     color: rgb(var(--m3dl-color-on-surface));
   }
   .card.shown {
-    display: block;
+    display: flex;
   }
   input {
     appearance: none;

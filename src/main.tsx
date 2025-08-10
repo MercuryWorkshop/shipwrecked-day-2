@@ -71,13 +71,14 @@ App.style = css<typeof App>`
 
 	:scope :global(.m3dl-scheme-styles) > * {
 		position: absolute;
-		inset: 0;
+		// inset: 0;
 	}
 
 	.bg {
 		background: url("/bg.jpg");
 		background-size: cover;
 		background-position: center;
+		inset: 0;
 	}
 
 	.info {
@@ -86,6 +87,15 @@ App.style = css<typeof App>`
 		display: flex;
 		align-items: flex-start;
 		justify-content: end;
+		z-index: 2;
+		width: max-content;
+		height: max-content;
+		right: 0;
+	}
+
+	.messages {
+	  z-index: 1;
+			inset: 0;
 	}
 	.info > :global(*) {
 		pointer-events: auto;

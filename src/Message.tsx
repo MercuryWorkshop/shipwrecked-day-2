@@ -38,8 +38,7 @@ Message.style = css<typeof Message>`
 	}
 `;
 
-export const MessageCreate: Component<{ text: string, "on:post": () => void }, { open: boolean }> = function() {
-	this.open = false;
+export const MessageCreate: Component<{ text: string, "on:post": () => void, open: boolean }> = function() {
 	return (
 		<div class="create">
 			<ToggleButton variant="elevated" value={use(this.open)} icon="full"><Icon icon={iconAdd} /></ToggleButton>

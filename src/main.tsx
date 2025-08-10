@@ -12,12 +12,13 @@ let scheme = new DynamicScheme({
 	isDark: true,
 });
 
-const App: Component<{}, { name: string, text: string, clickX: number, clickY: number, messages: HTMLElement[] }> = function() {
+const App: Component<{}, { name: string, text: string, clickX: number, clickY: number, open: boolean, messages: HTMLElement[] }> = function() {
 	this.name = "Toshit";
 	this.text = "";
 
-	this.clickX = 0;
-	this.clickY = 0;
+	this.clickX = -48;
+	this.clickY = -48;
+	this.open = false;
 	this.messages = [];
 
 	let click = (e: MouseEvent) => {
@@ -27,7 +28,13 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 		}
 	}
 
-	let post = () => this.messages = [...this.messages, <Message name={this.name} text={this.text} x={this.clickX} y={this.clickY} />];
+	let post = () => {
+		this.messages = [...this.messages, <Message name={this.name} text={this.text} x={this.clickX} y={this.clickY} />];
+		this.text = "";
+		this.clickX = -48;
+		this.clickY = -48;
+		this.open = false;
+	}
 
 	return (
 		<div id="app">
@@ -45,7 +52,7 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 				</div>
 				<div class="messages" on:click={click}>
 					{use(this.messages)}
-					<MessageCreate text={use(this.text)} on:post={post} />
+					<MessageCreate text={use(this.text)} on:post={post} open={use(this.open)} />
 				</div>
 			</SchemeStyles>
 		</div>

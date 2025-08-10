@@ -6,6 +6,22 @@
 	<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Vite + TS</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+  <script>
+    var once = false;
+    document.onclick = () => {
+      if(once) {
+        return
+      }
+      var sound = new Howl({
+        src: ['bgmusic.mp3'],
+        autoplay: true,
+        loop: true,
+      });
+      once = true;
+    }
+
+  </script>
 </head>
 
 <body>

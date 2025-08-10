@@ -31,7 +31,7 @@ def broadcast_all(message, websocket):
             print(f"broadcasting \"{message}\"")
             asyncio.create_task(send(connection, message))
     MESSAGES.append(message)
-    while MESSAGES.__len__ > 100:
+    while len(MESSAGES) > 100:
         MESSAGES.pop(0)
 
 def broadcast_messages(messages, websocket):

@@ -1,4 +1,4 @@
-import { css, type Component, type DLElement } from 'dreamland/core'
+import { css, type Component} from 'dreamland/core'
 import './style.css'
 import { argbFromHex, Card, DynamicScheme, Hct, SchemeStyles, TextFieldFilled, Variant } from 'm3-dreamland';
 import "m3-dreamland/styles";

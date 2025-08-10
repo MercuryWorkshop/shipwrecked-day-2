@@ -12,12 +12,13 @@ let scheme = new DynamicScheme({
 	isDark: true,
 });
 
-const App: Component<{}, { name: string, text: string, clickX: number, clickY: number, messages: HTMLElement[] }> = function() {
+const App: Component<{}, { name: string, text: string, clickX: number, clickY: number, open: boolean, messages: HTMLElement[] }> = function() {
 	this.name = "Toshit";
 	this.text = "";
 
-	this.clickX = 0;
-	this.clickY = 0;
+	this.clickX = -48;
+	this.clickY = -48;
+	this.open = false;
 	this.messages = [];
 
 	let click = (e: MouseEvent) => {
@@ -27,12 +28,22 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 		}
 	}
 
-	let post = () => this.messages = [...this.messages, <Message name={this.name} text={this.text} x={this.clickX} y={this.clickY} />];
+	let post = () => {
+		this.messages = [...this.messages, <Message name={this.name} text={this.text} x={this.clickX} y={this.clickY} />];
+		this.text = "";
+		this.clickX = -48;
+		this.clickY = -48;
+		this.open = false;
+	}
 
 	return (
 		<div id="app">
 			<SchemeStyles scheme={scheme} motion="expressive">
 				<div class="bg" />
+				<div class="messages" on:click={click}>
+					{use(this.messages)}
+					<MessageCreate text={use(this.text)} on:post={post} open={use(this.open)} />
+				</div>
 				<div class="info">
 					<Card variant="elevated">
 						<div class="m3dl-font-display-small"><b>Spatial messenger thingy</b></div>
@@ -42,10 +53,6 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 						</div>
 						<TextFieldFilled value={use(this.name)} placeholder="name" />
 					</Card>
-				</div>
-				<div class="messages" on:click={click}>
-					{use(this.messages)}
-					<MessageCreate text={use(this.text)} on:post={post} />
 				</div>
 			</SchemeStyles>
 		</div>
@@ -74,10 +81,14 @@ App.style = css<typeof App>`
 	}
 
 	.info {
+		pointer-events: none;
 		padding: 1em;
 		display: flex;
 		align-items: flex-start;
 		justify-content: end;
+	}
+	.info > :global(*) {
+		pointer-events: auto;
 	}
 
 	.messages > :global(.create) {

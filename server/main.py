@@ -7,7 +7,7 @@ import websockets.asyncio.server as wsserver
 
 async def handler(websocket):
     async for message in websocket:
-        await websocket.broadcast(global_server.connections, message)
+        await wsserver.broadcast(global_server.connections, message)
 
 async def main():
     global global_server

@@ -35,25 +35,27 @@ Message.style = css<typeof Message>`
 		left: ${(x) => use(x.x).map((x) => x + "px")};
 	}
 
-	.root {
-		position: relative;
-	}
-	.bubble {
-		border-radius: 8px 2rem 2rem;
-		background: rgb(var(--m3dl-color-surface-container-low));
-		box-shadow: var(--m3dl-elevation-1);
-		color: rgb(var(--m3dl-color-on-surface));
-		min-width: 8rem;
-		padding: 1rem;
-	}
-	.card {
-		position: absolute;
-		top: calc(100% + 0.5rem);
-		display: none;
-	}
-	.card.shown {
-		display: block;
-	}
+  .root {
+    position: relative;
+  }
+  .bubble {
+    border-radius: 8px 2rem 2rem;
+    background: rgb(var(--m3dl-color-surface-container-low));
+    box-shadow: var(--m3dl-elevation-1);
+    color: rgb(var(--m3dl-color-on-surface));
+    min-width: 8rem;
+    padding: 1rem;
+    max-height: calc(100vh - 6rem - 4px - ${(x) => use(x.y).map((x: number) => x - 20 + "px")});
+    overflow: auto;
+  }
+  .card {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    display: none;
+  }
+  .card.shown {
+    display: block;
+  }
 `;
 
 export const MessageCreate: Component<

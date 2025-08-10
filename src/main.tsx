@@ -1,4 +1,4 @@
-import { css, type Component } from 'dreamland/core'
+import { css, type Component, type DLElement } from 'dreamland/core'
 import './style.css'
 import { argbFromHex, Card, DynamicScheme, Hct, SchemeStyles, TextFieldFilled, Variant } from 'm3-dreamland';
 import "m3-dreamland/styles";
@@ -12,12 +12,13 @@ let scheme = new DynamicScheme({
 	isDark: true,
 });
 
-const App: Component<{}, { name: string, text: string, clickX: number, clickY: number, }> = function() {
+const App: Component<{}, { name: string, text: string, clickX: number, clickY: number, messages: HTMLElement[] }> = function() {
 	this.name = "Toshit";
 	this.text = "";
 
 	this.clickX = 0;
 	this.clickY = 0;
+	this.messages = [];
 
 	let click = (e: MouseEvent) => {
 		if (e.target === e.currentTarget) {
@@ -25,6 +26,8 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 			this.clickY = Math.max(0, e.pageY - 20);
 		}
 	}
+
+	let post = () => this.messages = [...this.messages, <Message name={this.name} text={this.text} x={this.clickX} y={this.clickY} />];
 
 	return (
 		<div id="app">
@@ -41,7 +44,8 @@ const App: Component<{}, { name: string, text: string, clickX: number, clickY: n
 					</Card>
 				</div>
 				<div class="messages" on:click={click}>
-					<MessageCreate text={use(this.text)} />
+					<MessageCreate text={use(this.text)} on:post={post} />
+					{use(this.messages)}
 				</div>
 			</SchemeStyles>
 		</div>

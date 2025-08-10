@@ -1,5 +1,5 @@
 import { css, type Component } from "dreamland/core";
-import { Card, Icon, TextFieldFilled, ToggleButton } from "m3-dreamland";
+import { Button, Card, Icon, TextFieldFilled, ToggleButton } from "m3-dreamland";
 import iconAdd from "@ktibow/iconset-material-symbols/add";
 
 export const Message: Component<{ name: string, text: string, x: number, y: number, }, { open: boolean }> = function() {
@@ -20,8 +20,8 @@ export const Message: Component<{ name: string, text: string, x: number, y: numb
 Message.style = css<typeof Message>`
 	:scope {
 		position: absolute;
-		top: ${x => use(x.x).map(x => x + "px")};
-		left: ${x => use(x.y).map(x => x + "px")};
+		top: ${x => use(x.y).map(x => x + "px")};
+		left: ${x => use(x.x).map(x => x + "px")};
 	}
 
 	.root {
@@ -38,14 +38,17 @@ Message.style = css<typeof Message>`
 	}
 `;
 
-export const MessageCreate: Component<{ text: string }, { open: boolean }> = function() {
+export const MessageCreate: Component<{ text: string, "on:post": () => void }, { open: boolean }> = function() {
 	this.open = false;
 	return (
 		<div class="create">
 			<ToggleButton variant="elevated" value={use(this.open)} icon="full"><Icon icon={iconAdd} /></ToggleButton>
 			<div class="card" class:shown={use(this.open)}>
 				<Card variant="elevated">
-					<TextFieldFilled placeholder="Message" value={use(this.text)} />
+					<div>
+						<TextFieldFilled placeholder="Message" value={use(this.text)} />
+					</div>
+					<Button variant="filled" on:click={this["on:post"]}>Post</Button>
 				</Card>
 			</div>
 		</div>
